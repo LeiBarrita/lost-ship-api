@@ -3,7 +3,7 @@ import { Request, Response } from "express";
 export const getStatus = async (req: Request, res: Response): Promise<any> => {
   try {
     return res.json({
-      damaged_systems: "navigation",
+      damaged_system: "navigation",
     });
   } catch (error) {
     return res.status(500).json({ error });
