@@ -13,7 +13,7 @@ exports.postTeapot = exports.getRepairBay = exports.getStatus = void 0;
 const getStatus = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     try {
         return res.json({
-            damaged_systems: "navigation",
+            damaged_system: "navigation",
         });
     }
     catch (error) {
