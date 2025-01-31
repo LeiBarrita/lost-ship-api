@@ -9,7 +9,7 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
     });
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.postTeapot = exports.getRepairBay = exports.getStatus = void 0;
+exports.getPhaseChange = exports.postTeapot = exports.getRepairBay = exports.getStatus = void 0;
 const getStatus = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     try {
         return res.json({
@@ -49,3 +49,23 @@ const postTeapot = (req, res) => __awaiter(void 0, void 0, void 0, function* () 
     }
 });
 exports.postTeapot = postTeapot;
+const getPhaseChange = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    try {
+        const pressure = parseFloat(req.query.pressure);
+        console.log(pressure);
+        const liquidSlope = (10 - 0.05) / (0.0035 - 0.00105);
+        const liquidYIntercept = 10 - liquidSlope * 0.0035;
+        const vaporSlope = (0.05 - 10) / (30 - 0.0035);
+        const vaporYIntercept = 10 - vaporSlope * 0.0035;
+        const liquidVolume = (pressure - liquidYIntercept) / liquidSlope;
+        const vaporVolume = (pressure - vaporYIntercept) / vaporSlope;
+        return res.json({
+            specific_volume_liquid: liquidVolume.toFixed(4),
+            specific_volume_vapor: vaporVolume.toFixed(4),
+        });
+    }
+    catch (error) {
+        return res.status(500).json({ error });
+    }
+});
+exports.getPhaseChange = getPhaseChange;

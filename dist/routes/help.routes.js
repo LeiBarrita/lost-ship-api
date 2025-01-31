@@ -39,4 +39,5 @@ const router = (0, express_1.Router)();
 router.get("/status", helpController.getStatus);
 router.get("/repair-bay", helpController.getRepairBay);
 router.post("/teapot", helpController.postTeapot);
+router.get("/phase-change-diagram", helpController.getPhaseChange);
 exports.default = router;
