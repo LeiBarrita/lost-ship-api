@@ -38,3 +38,30 @@ export const postTeapot = async (req: Request, res: Response): Promise<any> => {
     return res.status(500).json({ error });
   }
 };
+
+export const getPhaseChange = async (
+  req: Request,
+  res: Response
+): Promise<any> => {
+  try {
+    const pressure = parseFloat(req.query.pressure as string);
+
+    console.log(pressure);
+
+    const liquidSlope = (10 - 0.05) / (0.0035 - 0.00105);
+    const liquidYIntercept = 10 - liquidSlope * 0.0035;
+
+    const vaporSlope = (0.05 - 10) / (30 - 0.0035);
+    const vaporYIntercept = 10 - vaporSlope * 0.0035;
+
+    const liquidVolume = (pressure - liquidYIntercept) / liquidSlope;
+    const vaporVolume = (pressure - vaporYIntercept) / vaporSlope;
+
+    return res.json({
+      specific_volume_liquid: liquidVolume.toFixed(4),
+      specific_volume_vapor: vaporVolume.toFixed(4),
+    });
+  } catch (error) {
+    return res.status(500).json({ error });
+  }
+};
